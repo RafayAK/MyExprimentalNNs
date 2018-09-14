@@ -54,11 +54,10 @@ alpha = 10
 for epoch in range(50000):
     # forward propagation
     z_Lyr1 = np.dot(theta1, X.T)  # weighted sum of all inputs for Layer1
-
     a_Lyr1 = sigmoid(z_Lyr1)  # activations for layer
     a_Lyr1 = np.concatenate((a_Lyr1, np.ones((1, a_Lyr1.shape[1]))), axis=0)  # add 1s col for bias units
 
-    z_Lyr2 = np.dot(theta2, a_Lyr1)  # weighted sum of activations from hiiden layer
+    z_Lyr2 = np.dot(theta2, a_Lyr1)  # weighted sum of activations from hidden layer
     a_Lyr2 = sigmoid(z_Lyr2)  # Final output
 
     # find the error of the outputs
@@ -74,7 +73,7 @@ for epoch in range(50000):
 
     partial_a_Lyr2 = sigmoid(a_Lyr2, deriv=True)  # derivative of a_Lyr2 w.r.t to z_Lyr2
 
-    Delta_theta2 = np.dot((partial_E * partial_a_Lyr2), a_Lyr1.T)  # element-wise broadcast-ed multiplication
+    Delta_theta2 = np.dot((partial_E * partial_a_Lyr2), a_Lyr1.T)  # dot product to sum gradients across all examples
 
     # gradients for input layer
     partial_E_Lyr1 = partial_E * np.dot(partial_a_Lyr2.T, theta2).T
